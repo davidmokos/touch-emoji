@@ -20,12 +20,12 @@ class Scrubber: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource, 
         super.init(coder: coder)
     }
     
-    override init(identifier: NSTouchBarItemIdentifier) {
+    override init(identifier: NSTouchBarItem.Identifier) {
         super.init(identifier: identifier)
         
         let scrubber = NSScrubber()
         scrubber.scrubberLayout = NSScrubberFlowLayout()
-        scrubber.register(NSScrubberTextItemView.self, forItemIdentifier: self.itemViewIdentifier)
+        scrubber.register(NSScrubberTextItemView.self, forItemIdentifier: NSUserInterfaceItemIdentifier(rawValue: self.itemViewIdentifier))
         // .free makes the Scrubber scrollable:
         scrubber.mode = .free
         scrubber.selectionBackgroundStyle = .roundedBackground
@@ -39,7 +39,7 @@ class Scrubber: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource, 
     }
     
     func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        let itemView = scrubber.makeItem(withIdentifier: self.itemViewIdentifier,
+        let itemView = scrubber.makeItem(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: self.itemViewIdentifier),
                                          owner: nil) as! NSScrubberTextItemView
         
         let emojiToFiew = Emojis.arrayEmojis[index]

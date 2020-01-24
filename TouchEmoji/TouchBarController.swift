@@ -24,9 +24,9 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     }
     
     // the identifiers for the Touch Bar modal and items:
-    let emojiSystemModal = NSTouchBarItemIdentifier("in.lor.EmojiSystemModal")
-    let emojiScrubberIdentifier = NSTouchBarItemIdentifier("in.lor.EmojiScrubber")
-    let emojiButtonIdentifier = NSTouchBarItemIdentifier("in.lor.EmojiButton")
+    let emojiSystemModal = NSTouchBarItem.Identifier("in.lor.EmojiSystemModal")
+    let emojiScrubberIdentifier = NSTouchBarItem.Identifier("in.lor.EmojiScrubber")
+    let emojiButtonIdentifier = NSTouchBarItem.Identifier("in.lor.EmojiButton")
     
     // the scrubber we use to display the emojis:
     var scrubber = NSScrubber()
@@ -46,7 +46,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         return singleSystemModalTouchBar
     }
     
-    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         // the Touch Bar is initializing:
         if (identifier == emojiScrubberIdentifier) {
             
@@ -58,19 +58,21 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
             return scrubberItem
             
         } else if(identifier == emojiButtonIdentifier) {
-            // setting up the emoji Button:
-            let exitButton = NSCustomTouchBarItem(identifier: emojiButtonIdentifier)
-            exitButton.view = NSButton(title: "exit", target: self, action: #selector(self.exitButtonTapped))
+//            // setting up the emoji Button:
+//            let exitButton = NSCustomTouchBarItem(identifier: emojiButtonIdentifier)
+//            exitButton.view = NSButton(title: "exit", target: self, action: #selector(self.exitButtonTapped))
+//
+//            return exitButton
             
-            return exitButton
+            return nil
         } else {
             
             return nil
         }
     }
     
-    func exitButtonTapped(_ sender: Any) {
-        NSApplication.shared().terminate(self)
+    @objc func exitButtonTapped(_ sender: Any) {
+        NSApplication.shared.terminate(self)
     }
     
     static let shared = TouchBarController()
